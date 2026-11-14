@@ -13,6 +13,9 @@ public class PasswordGenerator {
 
     public String generate(int length, String language, boolean lower, boolean upper,
                            String digits, boolean special) {
+        if (length < 1) {
+            throw new IllegalArgumentException("Длина должна быть положительной");
+        }
         String alphabet = buildAlphabet(language, lower, upper, digits, special);
         if (alphabet.isEmpty()) {
             throw new IllegalArgumentException("Пустой алфавит");
