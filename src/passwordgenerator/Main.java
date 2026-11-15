@@ -1,5 +1,6 @@
 package passwordgenerator;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -25,11 +26,18 @@ public class Main {
         System.out.print("Спецсимволы (y/n): ");
         boolean special = yes(scanner.nextLine());
 
+        long start = System.nanoTime();
         String password = new PasswordGenerator().generate(length, language, lower, upper, digits, special);
-        System.out.println("[+] " + password);
+        double milliseconds = (System.nanoTime() - start) / 1_000_000.0;
+        printResult(password, milliseconds);
     }
 
     private static boolean yes(String value) {
         return value.trim().equalsIgnoreCase("y") || value.trim().equalsIgnoreCase("д");
+    }
+
+    private static void printResult(String password, double milliseconds) {
+        System.out.println(password.length() <= 200 ? "[+] " + password : "[+] Готово: " + password.length());
+        System.out.printf(Locale.US, "[+] %.3f мс%n", milliseconds);
     }
 }
