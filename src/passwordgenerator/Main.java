@@ -1,5 +1,9 @@
 package passwordgenerator;
 
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -37,7 +41,25 @@ public class Main {
     }
 
     private static void printResult(String password, double milliseconds) {
-        System.out.println(password.length() <= 200 ? "[+] " + password : "[+] Готово: " + password.length());
+        if (password.length() <= 200) {
+            System.out.println("[+] " + password);
+        } else {
+            copyToClipboard(password);
+            System.out.println("[+] " + password.substring(0, 32)
+                    + "... (обрезано; полный пароль в буфере обмена)");
+        }
         System.out.printf(Locale.US, "[+] %.3f мс%n", milliseconds);
+    }
+
+    /* snippet from https://www.javacodegeeks.com/java-clipboard-text-copy.html */
+    private static void copyToClipboard(String text) {
+        try {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(new StringSelection(text), null);
+        } catch (HeadlessException exception) {
+            System.out.println("[!] Буфер обмена недоступен без графической среды");
+        } catch (IllegalStateException exception) {
+            System.out.println("[!] Буфер обмена занят, попробуйте ещё раз");
+        }
     }
 }
