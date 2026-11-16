@@ -4,13 +4,19 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.io.File;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            runDialog(new Scanner(System.in));
+            if (args.length > 0 && args[0].equalsIgnoreCase("test")) {
+                Benchmark.run(new File("benchmark.csv"));
+                System.out.println("[+] benchmark.csv");
+            } else {
+                runDialog(new Scanner(System.in));
+            }
         } catch (Exception exception) {
             System.out.println("[-] " + exception.getMessage());
         }
