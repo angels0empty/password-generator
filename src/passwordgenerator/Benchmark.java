@@ -26,6 +26,8 @@ public final class Benchmark {
     }
 
     public static void run(File detailsFile) throws Exception {
+        SystemInfo.printToConsole();
+        SystemInfo.writeFile(new File("system-info.txt"));
         try (PrintWriter details = new PrintWriter(detailsFile, StandardCharsets.UTF_8)) {
             details.println("length;profile;run;milliseconds");
             for (int length : LENGTHS) {

@@ -32,3 +32,4 @@ bin/
 .idea/
 *.iml
 benchmark.csv
+system-info.txt

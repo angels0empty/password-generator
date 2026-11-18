@@ -13,7 +13,7 @@ public class Main {
         try {
             if (args.length > 0 && args[0].equalsIgnoreCase("test")) {
                 Benchmark.run(new File("benchmark.csv"));
-                System.out.println("[+] benchmark.csv");
+                System.out.println("[+] benchmark.csv, system-info.txt");
             } else {
                 runDialog(new Scanner(System.in));
             }
@@ -57,7 +57,6 @@ public class Main {
         System.out.printf(Locale.US, "[+] %.3f мс%n", milliseconds);
     }
 
-    /* snippet from https://www.javacodegeeks.com/java-clipboard-text-copy.html */
     private static void copyToClipboard(String text) {
         try {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
