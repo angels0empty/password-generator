@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
         try {
             if (args.length > 0 && args[0].equalsIgnoreCase("test")) {
-                Benchmark.run(new File("benchmark.csv"));
-                System.out.println("[+] benchmark.csv, system-info.txt");
+                Benchmark.run(new File("benchmark.csv"), new File("benchmark-summary.csv"));
+                System.out.println("[+] benchmark.csv, benchmark-summary.csv, system-info.txt");
             } else {
                 runDialog(new Scanner(System.in));
             }
