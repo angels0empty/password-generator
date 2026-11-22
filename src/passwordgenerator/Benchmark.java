@@ -1,5 +1,8 @@
 package passwordgenerator;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -7,6 +10,8 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public final class Benchmark {
+    private static final Logger LOG = LogManager.getLogger(Benchmark.class);
+
     static final int[] LENGTHS = {10_000, 50_000, 100_000, 250_000, 500_000, 750_000, 1_000_000};
     static final int PROFILES = 5;
     static final int REPEATS = 10;
@@ -29,6 +34,7 @@ public final class Benchmark {
     public static void run(File detailsFile, File summaryFile) throws Exception {
         SystemInfo.printToConsole();
         SystemInfo.writeFile(new File("system-info.txt"));
+        LOG.info("Benchmark started: {} series of {} runs", LENGTHS.length * PROFILES, REPEATS);
         try (PrintWriter details = new PrintWriter(detailsFile, StandardCharsets.UTF_8);
              PrintWriter summary = new PrintWriter(summaryFile, StandardCharsets.UTF_8)) {
             details.println("length;profile;run;milliseconds");
@@ -39,6 +45,7 @@ public final class Benchmark {
                 }
             }
         }
+        LOG.info("Benchmark finished");
     }
 
     private static void writeSeries(int length, int profile,
@@ -50,9 +57,8 @@ public final class Benchmark {
             double milliseconds = (System.nanoTime() - start) / 1_000_000.0;
             times[run - 1] = milliseconds;
             details.printf(Locale.US, "%d;%d;%d;%.3f%n", length, profile, run, milliseconds);
-            System.out.printf(Locale.US,
-                    "length=%d profile=%d run=%d -> %.3f ms%n",
-                    length, profile, run, milliseconds);
+            LOG.debug("Run: length={} profile={} run={} -> {} ms",
+                    length, profile, run, String.format(Locale.US, "%.3f", milliseconds));
         }
         double[] sorted = times.clone();
         Arrays.sort(sorted);
@@ -64,5 +70,6 @@ public final class Benchmark {
                 : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2.0;
         summary.printf(Locale.US, "%d;%d;%.3f;%.3f;%.3f;%.3f%n",
                 length, profile, min, max, avg, median);
+        LOG.info("Series: length={} profile={} avg={} ms", length, profile, avg);
     }
 }

@@ -33,3 +33,4 @@ bin/
 *.iml
 benchmark*.csv
 system-info.txt
+logs/
