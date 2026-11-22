@@ -11,6 +11,9 @@
     <Loggers>
         <Logger name="passwordgenerator.Benchmark" level="debug" additivity="false">
             <AppenderRef ref="File"/>
+            <AppenderRef ref="Console">
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </AppenderRef>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
