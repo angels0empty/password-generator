@@ -10,6 +10,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.gradleup.shadow' version "9.6.1"
+    id 'org.openjfx.javafxplugin' version "0.1.0"
 }
 
 repositories {
@@ -31,13 +32,24 @@ java {
     }
 }
 
+javafx {
+    version = '21.0.13.1'
+    modules = ['javafx.controls']
+}
+
 application {
     // Define the main class for the application.
-    mainClass = 'passwordgenerator.Main'
+    mainClass = 'passwordgenerator.Launcher'
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+tasks.named('run', JavaExec) {
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        systemProperty 'file.encoding', 'cp866'
+    }
 }
 
 tasks.named('shadowJar') {
