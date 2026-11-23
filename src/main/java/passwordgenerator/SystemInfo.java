@@ -9,22 +9,29 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-
-// ref https://www.besthub.dev/articles/getting-started-with-oshi-a-java-library-for-cross-platform-system-information-fa2bf3abf493
+/** Собирает сведения о системе через библиотеку OSHI. */
 public final class SystemInfo {
     private SystemInfo() {
     }
 
+    /** Выводит сведения о системе в консоль. */
     public static void printToConsole() {
         write(new PrintWriter(System.out, true));
     }
 
+    /**
+     * Сохраняет сведения о системе в файл.
+     *
+     * @param file файл для записи
+     * @throws Exception ошибка записи файла
+     */
     public static void writeFile(File file) throws Exception {
         try (PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8)) {
             write(writer);
         }
     }
 
+    /** Пишет сведения о системе в переданный writer. */
     private static void write(PrintWriter writer) {
         oshi.SystemInfo info = new oshi.SystemInfo();
         OperatingSystem os = info.getOperatingSystem();

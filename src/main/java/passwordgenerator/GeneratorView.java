@@ -57,7 +57,11 @@ public class GeneratorView {
         root.setBottom(statusLabel);
     }
 
-    /** Возвращает корневой элемент вкладки. */
+    /**
+     * Возвращает корневой элемент вкладки.
+     *
+     * @return корневой элемент вкладки
+     */
     public Node getView() {
         return root;
     }

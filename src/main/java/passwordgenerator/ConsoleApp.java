@@ -10,9 +10,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.Locale;
 import java.util.Scanner;
 
+/** Реализует консольный диалог генерации пароля. */
 public class ConsoleApp {
     private static final Logger LOG = LogManager.getLogger(ConsoleApp.class);
 
+    /** Запускает диалог и обрабатывает ошибки ввода и завершения потока. */
     public static void run() {
         try {
             runDialog(new Scanner(System.in));
@@ -22,6 +24,7 @@ public class ConsoleApp {
         }
     }
 
+    /** Последовательно просит у пользователя параметры и создаёт пароль. */
     private static void runDialog(Scanner scanner) {
         System.out.print("Длина: ");
         int length = SettingsValidator.parseLength(scanner.nextLine());
@@ -42,10 +45,12 @@ public class ConsoleApp {
         printResult(password, milliseconds);
     }
 
+    /** Проверяет положительный ответ пользователя. */
     private static boolean yes(String value) {
         return value.trim().equalsIgnoreCase("y") || value.trim().equalsIgnoreCase("д");
     }
 
+    /** Выводит пароль или краткое сообщение для большой длины. */
     private static void printResult(String password, double milliseconds) {
         if (password.length() <= 200) {
             System.out.println("[+] " + password);
@@ -58,6 +63,7 @@ public class ConsoleApp {
         LOG.info("Console generation: length={}, time={} ms", password.length(), milliseconds);
     }
 
+    /** Копирует текст в системный буфер обмена. */
     private static void copyToClipboard(String text) {
         try {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

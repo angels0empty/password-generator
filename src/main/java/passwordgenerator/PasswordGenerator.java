@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/** Создает случайные пароли по заданным параметрам. */
 public class PasswordGenerator {
     static final String EN_LOWER = "abcdefghijklmnopqrstuvwxyz";
     static final String EN_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -16,6 +17,17 @@ public class PasswordGenerator {
 
     private final SecureRandom random = new SecureRandom();
 
+    /**
+     * Генерирует пароль, гарантируя наличие всех выбранных групп символов.
+     *
+     * @param length длина пароля
+     * @param language язык: en, ru или both
+     * @param lower использовать строчные буквы
+     * @param upper использовать прописные буквы
+     * @param digits разрешенные цифры
+     * @param special использовать специальные символы
+     * @return сгенерированный пароль
+     */
     public String generate(int length, String language, boolean lower, boolean upper,
                            String digits, boolean special) {
         String normalizedDigits = normalizeDigits(digits);
@@ -31,6 +43,7 @@ public class PasswordGenerator {
         return shuffle(password.toString());
     }
 
+    /** Проверяет исходные значения параметров. */
     private void validateInput(int length, String language, boolean letters, String digits) {
         if (length < 1 || length > MAX_LENGTH) {
             throw new IllegalArgumentException("Длина: 1.." + MAX_LENGTH);
@@ -43,6 +56,7 @@ public class PasswordGenerator {
         }
     }
 
+    /** Удаляет повторяющиеся цифры при помощи Stream API. */
     private String normalizeDigits(String digits) {
         if (digits == null) {
             return "";
@@ -51,6 +65,7 @@ public class PasswordGenerator {
                 StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
     }
 
+    /** Формирует список выбранных групп символов. */
     private List<String> createGroups(String language, boolean lower, boolean upper,
                                       String digits, boolean special) {
         List<String> groups = new ArrayList<>();
@@ -64,6 +79,7 @@ public class PasswordGenerator {
         return groups;
     }
 
+    /** Добавляет выбранные языки и регистры в список групп. */
     private void addLetterGroups(List<String> groups, String language, boolean lower, boolean upper) {
         if (lower && (language.equals("en") || language.equals("both"))) {
             groups.add(EN_LOWER);
@@ -79,6 +95,7 @@ public class PasswordGenerator {
         }
     }
 
+    /** Проверяет итоговый алфавит и минимально возможную длину. */
     private void validateAlphabet(int length, String alphabet, int requiredSize) {
         if (alphabet.isEmpty()) {
             throw new IllegalArgumentException("Пустой алфавит");
@@ -88,10 +105,12 @@ public class PasswordGenerator {
         }
     }
 
+    /** Возвращает случайный символ переданного алфавита. */
     private char randomChar(String alphabet) {
         return alphabet.charAt(random.nextInt(alphabet.length()));
     }
 
+    /** Перемешивает символы алгоритмом Фишера - Йетса. */
     private String shuffle(String password) {
         char[] result = password.toCharArray();
         for (int index = result.length - 1; index > 0; index--) {

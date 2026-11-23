@@ -180,15 +180,32 @@ public class Benchmark {
 
     /** Результат одной серии измерений. */
     public static class Result {
+        /** Длина пароля в серии. */
         public final int length;
+        /** Индекс профиля сложности. */
         public final int profile;
+        /** Минимальное время генерации, мс. */
         public final double min;
+        /** Максимальное время генерации, мс. */
         public final double max;
+        /** Среднее время генерации, мс. */
         public final double average;
+        /** Медианное время генерации, мс. */
         public final double median;
+        /** Скорость генерации, символов в секунду. */
         public final double speed;
 
-        /** Создаёт объект со статистикой серии. */
+        /**
+         * Создаёт объект со статистикой серии.
+         *
+         * @param length длина пароля
+         * @param profile индекс профиля сложности
+         * @param min минимальное время серии
+         * @param max максимальное время серии
+         * @param average среднее время серии
+         * @param median медианное время серии
+         * @param speed скорость генерации в символах в секунду
+         */
         public Result(int length, int profile, double min, double max,
                       double average, double median, double speed) {
             this.length = length;
