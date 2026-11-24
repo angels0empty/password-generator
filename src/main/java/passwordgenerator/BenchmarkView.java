@@ -78,7 +78,7 @@ public class BenchmarkView {
         table.getColumns().add(textColumn("Среднее", "average"));
         table.getColumns().add(textColumn("Медиана", "median"));
         table.getColumns().add(textColumn("Сим/с", "speed"));
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         return table;
     }
 
