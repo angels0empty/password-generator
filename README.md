@@ -28,7 +28,8 @@ password-generator/
 │   ├── SettingsValidatorTest.java
 │   └── BenchmarkTest.java
 ├── docs/javadoc/                       # HTML-документация (gradlew javadoc)
-├── password-generator.jar              # готовый fat JAR
+├── password-generator.jar              # готовый fat JAR (Windows)
+├── password-generator-linux-x64.jar    # готовый fat JAR (Linux x64)
 ├── .gitignore
 └── .gitattributes
 ```
@@ -63,6 +64,8 @@ password-generator/
 
 ### `GeneratorView`
 
+![Вкладка генерации паролей](docs/images/gui-generator.png)
+
 Отвечает за:
 
 - ввод параметров;
@@ -75,6 +78,8 @@ password-generator/
 Пароли длиной более 100 000 символов не выводятся целиком в текстовое поле, но их можно скопировать или сохранить.
 
 ### `BenchmarkView`
+
+![Вкладка бенчмарка](docs/images/gui-benchmark.png)
 
 Отвечает за:
 
@@ -119,6 +124,7 @@ password-generator/
 
 ## 6. Сборка и запуск
 
+В корне репозитория лежит готовый `password-generator.jar` и `password-generator-linux-x64.jar` для **Windows** & **Linux**. Сборка `.jar` для **macOS** доступна в разделе **Releases**. Для каждой системы свой JAR-ник.
 Для сборки нужен JDK 17, для запуска готового JAR - Java 17 или новее. 
 Команды ниже написаны в едином виде для PowerShell и Unix-оболочек (Linux/macOS/etc): `./gradlew`. На Linux/macOS при необходимости предварительно выдаются права на запуск (`chmod +x gradlew`), в старом CMD/PowerShell при ошибке можно использовать `.\gradlew` или `gradlew.bat`.
 
