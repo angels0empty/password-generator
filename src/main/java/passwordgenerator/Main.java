@@ -44,11 +44,22 @@ public class Main extends Application {
                 LOG.warn("Unknown arguments: {}", Arrays.toString(args));
                 System.out.println("[-] Аргументы: console | test");
             } else {
-                launch(args);
+                runGuiOrFallbackToConsole();
             }
         } catch (Exception exception) {
             LOG.error("Application startup error", exception);
             System.out.println("[-] " + exception.getMessage());
+        }
+    }
+
+    /** Пробует открыть окно. Если графического окружения нет - продолжаем в консольном режимею */
+    private static void runGuiOrFallbackToConsole() throws Exception {
+        try {
+            launch(new String[0]);
+        } catch (RuntimeException exception) {
+            LOG.warn("GUI is not available, falling back to console mode", exception);
+            System.out.println("[-] Графический интерфейс недоступен, переключаюсь в консольный режим. Для бенчмарка используйте аргумент test");
+            ConsoleApp.run();
         }
     }
 
