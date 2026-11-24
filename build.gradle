@@ -60,12 +60,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('run', JavaExec) {
-    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-        systemProperty 'file.encoding', 'cp866'
-    }
-}
-
 tasks.named('shadowJar') {
     archiveFileName = 'password-generator-fat.jar'
     doLast {
